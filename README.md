@@ -5,93 +5,63 @@
 ## Требования
 
 - [Figma Desktop](https://www.figma.com/downloads/) (macOS или Windows) — в браузере плагин не запускается
-- [Node.js](https://nodejs.org/) 18+
 
 ## Быстрый старт
 
-### 1. Клонировать репозиторий
+Скачай папку проекта и открой в Figma — **npm не нужен**.
+
+### 1. Скачать репозиторий
 
 ```bash
 git clone https://github.com/AventusDesign/figmaplugin.git
-cd figmaplugin
 ```
 
-### 2. Установить зависимости
+Или на GitHub: **Code → Download ZIP**, распакуй.
 
-```bash
-npm install
-```
-
-### 3. Собрать плагин
-
-```bash
-npm run build
-```
-
-После сборки появятся файлы в `dist/`:
-- `dist/code.js` — основная логика (Figma sandbox)
-- `dist/ui.html` — UI плагина
-
-> `dist/` не хранится в git. Перед каждым импортом или запуском нужна сборка.
-
-### 4. Импортировать в Figma
+### 2. Импортировать в Figma
 
 1. Открой **Figma Desktop**
 2. Создай или открой любой design-файл
-3. Меню: **Plugins → Development → Import plugin from manifest…**
-4. Выбери файл `manifest.json` из корня проекта
+3. **Plugins → Development → Import plugin from manifest…**
+4. Выбери `manifest.json` из корня папки проекта
 
-### 5. Запустить плагин
+### 3. Запустить
 
 **Plugins → Development → Inspect**
 
 Выбери один слой на канвасе — в панели появятся данные.
 
-## Разработка
+## Обновление плагина
 
-### Watch-режим
+Если вышла новая версия — скачай свежую папку (или `git pull`), затем в Figma:
 
-Автопересборка при изменениях:
+**Plugins → Development → Manage plugins in development → … → Remove**
 
-```bash
-npm run watch
-```
+И снова **Import plugin from manifest…**
 
-После изменений перезапусти плагин в Figma (закрой и открой снова).
+## Разработка (если меняешь код)
 
-### Проверка типов
+Нужны [Node.js](https://nodejs.org/) 18+:
 
 ```bash
+npm install
+npm run build    # пересборка после изменений
+npm run watch    # автопересборка
 npm run typecheck
 ```
+
+После `npm run build` не забудь закоммитить `dist/`, чтобы остальные могли запускать без сборки.
 
 ### Структура проекта
 
 ```
 ├── manifest.json          # конфигурация плагина для Figma
-├── src/
-│   ├── code.ts            # логика в sandbox (Plugin API)
-│   ├── ui.ts              # UI и рендер панели
-│   ├── ui.html / ui.css   # разметка и стили
-│   ├── types.ts
-│   └── utils/             # генерация кода, цвета, экспорт и т.д.
-├── scripts/build.js       # сборка esbuild
-└── dist/                  # артефакты сборки (генерируется)
+├── dist/                  # собранный плагин (готов к импорту)
+│   ├── code.js
+│   └── ui.html
+├── src/                   # исходники TypeScript
+└── scripts/build.js       # сборка
 ```
-
-### Горячая перезагрузка в Figma
-
-В Figma Desktop можно включить hot reload для development-плагинов — плагин будет перезапускаться после пересборки без повторного импорта manifest.
-
-## Обновление после изменений кода
-
-1. `npm run build` (или `npm run watch`)
-2. В Figma перезапусти плагин
-
-Если менялся `manifest.json` или плагин ведёт себя странно:
-
-1. **Plugins → Development → Manage plugins in development**
-2. Удали плагин → **Import plugin from manifest…** заново
 
 ## Возможности
 
@@ -100,24 +70,23 @@ npm run typecheck
 - **Export** — PNG, SVG, PDF, batch export
 - **Show Spacing** — overlay отступов на канвасе
 
-## Публикация
+## Публикация в Figma Community
 
-Публикация возможна только из **Figma Desktop**. Нужна включённая **2FA** на аккаунте Figma.
+Только из **Figma Desktop**, нужна **2FA** на аккаунте.
 
-1. `npm run build`
-2. Импортируй и протестируй плагин
-3. **Plugins → Development → Manage plugins in development → … → Publish**
-4. Заполни описание, иконку, скриншоты
-5. **Publish to → Community** (публично) или **Organization** (только на Organization/Enterprise плане)
+1. Импортируй и протестируй плагин
+2. **Plugins → Development → Manage plugins in development → … → Publish**
+3. Заполни описание, иконку, скриншоты
+4. **Publish to → Community**
 
 ## Troubleshooting
 
 | Проблема | Решение |
 |----------|---------|
-| Плагин не появляется в Development | Убедись, что используешь Figma Desktop, не браузер |
-| Ошибка при импорте manifest | Выполни `npm run build` — без `dist/` плагин не соберётся |
+| Плагин не появляется | Используй Figma Desktop, не браузер |
+| Ошибка при импорте manifest | Убедись, что в папке есть `dist/code.js` и `dist/ui.html` |
 | Пустая панель | Выбери **один** слой (не несколько) |
-| Старый код после правок | Пересобери (`npm run build`) и перезапусти плагин |
+| Старая версия после обновления | Удали плагин из Development и импортируй manifest заново |
 
 ## Лицензия
 

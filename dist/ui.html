@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>:root {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #2c2c2c;
+  --bg-tertiary: #383838;
+  --text-primary: #ffffff;
+  --text-secondary: #8a8a8a;
+  --accent: #0d99ff;
+  --pink: #ff4785;
+  --border: #3a3a3a;
+  --spacing-color: #ff7200;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-pill {
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggle-pill.active {
+  background: var(--spacing-color);
+  color: #fff;
+  border-color: var(--spacing-color);
+}
+
+.header-selects {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.format-select {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 11px;
+  border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
+}
+
+.sub-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sub-tab {
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: none;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.sub-tab.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Content */
+.content {
+  padding: 0;
+  overflow-y: auto;
+  height: calc(100vh - 90px);
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+/* Node header */
+.node-header {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.node-name {
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.node-type {
+  font-size: 9px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+}
+
+.node-size {
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.master-link {
+  color: var(--accent);
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+/* Sections */
+.section {
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.section-header:hover {
+  background: var(--bg-secondary);
+}
+
+.section-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.section-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.section-body {
+  padding: 0 12px 12px;
+}
+
+.section.collapsed .section-body {
+  display: none;
+}
+
+/* List view rows */
+.prop-row {
+  display: flex;
+  align-items: baseline;
+  padding: 2px 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.prop-name {
+  color: var(--text-primary);
+  min-width: 110px;
+}
+
+.prop-value {
+  color: var(--pink);
+  word-break: break-all;
+}
+
+.prop-value.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.swatch:hover {
+  outline: 2px solid var(--accent);
+}
+
+.color-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.color-var {
+  font-size: 10px;
+  color: var(--text-primary);
+}
+
+.color-hex {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.color-usage {
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+/* Code blocks */
+.code-block {
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.code-block pre {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.css-prop {
+  color: var(--text-primary);
+}
+
+.css-val {
+  color: var(--pink);
+}
+
+.code-copy {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
+
+/* Variables */
+.var-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.var-row:last-child {
+  border-bottom: none;
+}
+
+.var-name {
+  font-size: 10px;
+  color: var(--text-primary);
+}
+
+.var-value {
+  font-size: 10px;
+  color: var(--pink);
+  font-family: monospace;
+}
+
+/* Export */
+.export-section {
+  padding: 12px;
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+#export-sub-tabs {
+  display: none;
+}
+
+#export-panel:not(.hidden) #export-sub-tabs {
+  display: flex;
+}
+
+.export-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.export-toolbar-left {
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.export-all-btn {
+  padding: 6px 12px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.export-all-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.asset-kind {
+  display: inline-block;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+.asset-kind.icon {
+  background: rgba(13, 153, 255, 0.2);
+  color: var(--accent);
+}
+
+.asset-kind.image {
+  background: rgba(255, 71, 133, 0.2);
+  color: var(--pink);
+}
+
+.asset-kind.other {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.asset-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.asset-type-label {
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+.asset-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.asset-controls .form-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.asset-export-btn {
+  padding: 5px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.asset-export-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.export-quick-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.asset-card {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.asset-name {
+  font-weight: 500;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.asset-size {
+  color: var(--text-secondary);
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+
+.export-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.export-btn {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.export-form {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.form-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  min-width: 50px;
+}
+
+.form-select {
+  flex: 1;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 8px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.primary-btn:hover {
+  opacity: 0.9;
+}
+
+.copied {
+  color: #4caf50 !important;
+}
+
+/* Box model */
+.box-model-section {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.box-model-wrap {
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 20px 28px 28px;
+  position: relative;
+}
+
+.box-model-outer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.margin-indicator {
+  font-size: 10px;
+  font-family: monospace;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.margin-indicator.top {
+  color: var(--pink);
+  margin-bottom: 4px;
+}
+
+.margin-indicator.bottom {
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.box-model-middle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  gap: 4px;
+}
+
+.margin-indicator.side {
+  color: var(--accent);
+  min-width: 16px;
+  text-align: center;
+}
+
+.box-border {
+  flex: 1;
+  max-width: 220px;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 18px 14px 14px;
+  position: relative;
+  background: var(--bg-primary);
+}
+
+.box-border-label,
+.box-padding-label {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 8px;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.radius-label {
+  position: absolute;
+  font-size: 8px;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.radius-label.tl { top: 2px; left: 14px; }
+.radius-label.tr { top: 2px; right: 14px; }
+.radius-label.bl { bottom: 2px; left: 14px; }
+.radius-label.br { bottom: 2px; right: 14px; }
+
+.border-weight {
+  position: absolute;
+  font-size: 8px;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.border-weight.top { top: 4px; left: 50%; transform: translateX(-50%); }
+.border-weight.bottom { bottom: 4px; left: 50%; transform: translateX(-50%); }
+.border-weight.left { left: 4px; top: 50%; transform: translateY(-50%); }
+.border-weight.right { right: 4px; top: 50%; transform: translateY(-50%); }
+
+.box-padding {
+  background: rgba(13, 153, 255, 0.15);
+  border: 1px solid rgba(13, 153, 255, 0.3);
+  border-radius: 4px;
+  padding: 18px 12px 12px;
+  position: relative;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pad-label {
+  position: absolute;
+  font-size: 9px;
+  font-family: monospace;
+  color: var(--accent);
+}
+
+.pad-label.top { top: 2px; left: 50%; transform: translateX(-50%); }
+.pad-label.bottom { bottom: 2px; left: 50%; transform: translateX(-50%); }
+.pad-label.left { left: 4px; top: 50%; transform: translateY(-50%); }
+.pad-label.right { right: 4px; top: 50%; transform: translateY(-50%); }
+
+.box-content {
+  border: 1px dashed var(--text-secondary);
+  border-radius: 2px;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-family: monospace;
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+  white-space: nowrap;
+}
+
+.box-sizing-tag {
+  position: absolute;
+  bottom: 6px;
+  right: 10px;
+  font-size: 8px;
+  color: var(--text-secondary);
+}
+
+/* Copyable rows */
+.prop-row,
+.var-row {
+  position: relative;
+  padding-right: 24px;
+}
+
+.prop-row .copy-prop,
+.var-row .copy-prop,
+.color-row-main .copy-prop {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.prop-row:hover .copy-prop,
+.var-row:hover .copy-prop,
+.color-group:hover .copy-prop {
+  opacity: 1;
+}
+
+.color-group {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.color-group:last-child {
+  border-bottom: none;
+}
+
+.color-row-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding-right: 24px;
+}
+
+.color-usages {
+  margin-left: 24px;
+  margin-top: 2px;
+}
+
+.color-usage-item {
+  font-size: 9px;
+  color: var(--text-secondary);
+  padding: 1px 0;
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-actions">
+      <button id="spacing-toggle" class="toggle-pill">Show Spacing</button>
+    </div>
+    <div class="header-selects">
+      <select id="code-platform" class="format-select" title="Code platform">
+        <option value="css">CSS</option>
+        <option value="ios">iOS</option>
+        <option value="android">Android</option>
+        <option value="flutter">Flutter</option>
+      </select>
+      <select id="color-format" class="format-select" title="Color format">
+        <option value="HEX">HEX</option>
+        <option value="RGB">RGB</option>
+        <option value="HSL">HSL</option>
+        <option value="CSS var">CSS var</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="inspect">Inspect</button>
+    <button class="tab" data-tab="export">Export</button>
+  </div>
+
+  <div id="inspect-panel">
+    <div class="sub-tabs">
+      <button class="sub-tab active" data-view="list">List</button>
+      <button class="sub-tab" data-view="code">Code</button>
+    </div>
+    <div class="content" id="inspect-content">
+      <div class="empty-state" id="empty-state">Select a layer to inspect</div>
+      <div id="inspect-data" class="hidden"></div>
+    </div>
+  </div>
+
+  <div id="export-panel" class="hidden">
+    <div class="sub-tabs" id="export-sub-tabs">
+      <button class="sub-tab active" data-export-tab="filtered">Icons & Images</button>
+      <button class="sub-tab" data-export-tab="all">All layers</button>
+    </div>
+    <div class="content export-section" id="export-content">
+      <div class="empty-state">Select a layer to export</div>
+    </div>
+  </div>
+
+  <script>"use strict";
+(() => {
+  // src/utils/color-utils.ts
+  function rgbToHex(r, g, b) {
+    const toHex = (n) => Math.round(n * 255).toString(16).padStart(2, "0");
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+  }
+  function rgbToArgbInt(color, opacity = 1) {
+    const a = Math.round(opacity * 255);
+    const r = Math.round(color.r * 255);
+    const g = Math.round(color.g * 255);
+    const b = Math.round(color.b * 255);
+    return `0x${a.toString(16).padStart(2, "0")}${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`.toUpperCase();
+  }
+  function rgbToHsl(r, g, b) {
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const l = (max + min) / 2;
+    if (max === min) return `hsl(0, 0%, ${Math.round(l * 100)}%)`;
+    const d = max - min;
+    const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    let h = 0;
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (max === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+    return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+  }
+  function formatColor(color, opacity, format, variable) {
+    if (format === "CSS var" && variable) return `var(${variable.cssName})`;
+    const hex = rgbToHex(color.r, color.g, color.b);
+    if (format === "HEX") return opacity < 1 ? `${hex}${Math.round(opacity * 255).toString(16).padStart(2, "0")}` : hex;
+    if (format === "RGB") return `rgba(${Math.round(color.r * 255)}, ${Math.round(color.g * 255)}, ${Math.round(color.b * 255)}, ${opacity.toFixed(2)})`;
+    return rgbToHsl(color.r, color.g, color.b);
+  }
+  function swiftColor(color, opacity = 1, variable) {
+    if (variable) return `Color("${variable.name}")`;
+    const base = `Color(red: ${color.r.toFixed(3)}, green: ${color.g.toFixed(3)}, blue: ${color.b.toFixed(3)})`;
+    return opacity < 1 ? `${base}.opacity(${opacity.toFixed(2)})` : base;
+  }
+  function kotlinColor(color, opacity = 1, variable) {
+    if (variable) return `colorResource(R.color.${variable.name.replace(/\//g, "_").replace(/\s+/g, "_").toLowerCase()})`;
+    const argb = rgbToArgbInt(color, opacity);
+    return `Color(${argb})`;
+  }
+  function flutterColor(color, opacity = 1, variable) {
+    if (variable) return `AppColors.${variable.name.replace(/\//g, "").replace(/\s+/g, "")}`;
+    return `Color(${rgbToArgbInt(color, opacity)})`;
+  }
+  function tokenName(name) {
+    return name.replace(/\//g, "_").replace(/\s+/g, "_");
+  }
+
+  // src/utils/css-gen.ts
+  function rgbToHex2(r, g, b) {
+    const toHex = (n) => Math.round(n * 255).toString(16).padStart(2, "0");
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+  }
+  function rgbToHsl2(r, g, b) {
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const l = (max + min) / 2;
+    if (max === min) return `hsl(0, 0%, ${Math.round(l * 100)}%)`;
+    const d = max - min;
+    const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    let h = 0;
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (max === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+    return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+  }
+  function formatColor2(color, opacity, format, variable) {
+    if (format === "CSS var" && variable) return `var(${variable.cssName})`;
+    const hex = rgbToHex2(color.r, color.g, color.b);
+    if (format === "HEX") return opacity < 1 ? `${hex}${Math.round(opacity * 255).toString(16).padStart(2, "0")}` : hex;
+    if (format === "RGB") return `rgba(${Math.round(color.r * 255)}, ${Math.round(color.g * 255)}, ${Math.round(color.b * 255)}, ${opacity.toFixed(2)})`;
+    return rgbToHsl2(color.r, color.g, color.b);
+  }
+  function serializePaintBackground(fill, format, variable) {
+    var _a2;
+    if (fill.visible === false) return null;
+    if (fill.type === "SOLID" && fill.color) {
+      return formatColor2(fill.color, (_a2 = fill.opacity) != null ? _a2 : 1, format, variable);
+    }
+    if (fill.type === "GRADIENT_LINEAR" && fill.gradientStops) {
+      const stops = fill.gradientStops.map((s) => {
+        const c = s.color;
+        const hex = rgbToHex2(c.r, c.g, c.b);
+        return `${hex} ${Math.round(s.position * 100)}%`;
+      }).join(", ");
+      return `linear-gradient(180deg, ${stops})`;
+    }
+    if (fill.type === "IMAGE") return "url(...)";
+    return null;
+  }
+  function generateLayoutCSS(data) {
+    var _a2, _b, _c, _d, _e, _f;
+    const lines = [];
+    if (data.parentLayoutMode === "NONE" || !data.parentLayoutMode) {
+      if (data.x !== void 0 && data.y !== void 0) {
+        lines.push("position: absolute;");
+        lines.push(`top: ${Math.round(data.y)}px;`);
+        lines.push(`left: ${Math.round(data.x)}px;`);
+      }
+    }
+    if (data.layoutMode === "HORIZONTAL") {
+      lines.push("display: flex;");
+      lines.push("flex-direction: row;");
+    } else if (data.layoutMode === "VERTICAL") {
+      lines.push("display: flex;");
+      lines.push("flex-direction: column;");
+    }
+    if (data.layoutAlign === "STRETCH") {
+      lines.push("width: 100%;");
+    } else if (data.width) {
+      lines.push(`width: ${Math.round(data.width)}px;`);
+    }
+    if (data.height) {
+      lines.push(`height: ${Math.round(data.height)}px;`);
+    }
+    const pt = (_a2 = data.paddingTop) != null ? _a2 : 0;
+    const pr = (_b = data.paddingRight) != null ? _b : 0;
+    const pb = (_c = data.paddingBottom) != null ? _c : 0;
+    const pl = (_d = data.paddingLeft) != null ? _d : 0;
+    if (pt || pr || pb || pl) {
+      if (pt === pb && pl === pr) {
+        if (pt === pl) lines.push(`padding: ${pt}px;`);
+        else lines.push(`padding: ${pt}px ${pr}px;`);
+      } else {
+        lines.push(`padding: ${pt}px ${pr}px ${pb}px ${pl}px;`);
+      }
+    }
+    const justifyMap2 = {
+      MIN: "flex-start",
+      CENTER: "center",
+      MAX: "flex-end",
+      SPACE_BETWEEN: "space-between"
+    };
+    const alignMap2 = {
+      MIN: "flex-start",
+      CENTER: "center",
+      MAX: "flex-end",
+      STRETCH: "stretch"
+    };
+    if (data.primaryAxisAlignItems && data.primaryAxisAlignItems !== "MIN") {
+      lines.push(`justify-content: ${(_e = justifyMap2[data.primaryAxisAlignItems]) != null ? _e : data.primaryAxisAlignItems.toLowerCase()};`);
+    }
+    if (data.counterAxisAlignItems && data.counterAxisAlignItems !== "MIN") {
+      lines.push(`align-items: ${(_f = alignMap2[data.counterAxisAlignItems]) != null ? _f : data.counterAxisAlignItems.toLowerCase()};`);
+    }
+    if (data.itemSpacing) {
+      lines.push(`gap: ${data.itemSpacing}px;`);
+    }
+    if (data.layoutWrap && data.layoutWrap !== "NO_WRAP") {
+      lines.push("flex-wrap: wrap;");
+    }
+    return lines.join("\n");
+  }
+  function generateStyleCSS(data, format = "HEX", variables = []) {
+    var _a2, _b, _c, _d, _e, _f, _g;
+    const lines = [];
+    const fillVar = variables.find((v) => v.name && data.boundVariables["fills"]);
+    if (data.cornerRadius === "MIXED" && data.cornerRadii) {
+      const { tl, tr, br, bl } = data.cornerRadii;
+      lines.push(`border-radius: ${tl}px ${tr}px ${br}px ${bl}px;`);
+    } else if (typeof data.cornerRadius === "number" && data.cornerRadius > 0) {
+      lines.push(`border-radius: ${data.cornerRadius}px;`);
+    }
+    const visibleFills = data.fills.filter((f) => f.visible !== false);
+    if (visibleFills.length === 1) {
+      const bg = serializePaintBackground(visibleFills[0], format, fillVar);
+      if (bg) lines.push(`background: ${bg};`);
+    } else if (visibleFills.length > 1) {
+      lines.push("background: /* multiple fills */;");
+    }
+    const visibleStrokes = data.strokes.filter((s) => s.visible !== false);
+    if (visibleStrokes.length && data.strokeWeight) {
+      const stroke = visibleStrokes[0];
+      if (stroke.type === "SOLID" && stroke.color) {
+        const color = formatColor2(stroke.color, (_a2 = stroke.opacity) != null ? _a2 : 1, format);
+        lines.push(`border: ${data.strokeWeight}px solid ${color};`);
+      }
+    }
+    for (const effect of data.effects) {
+      if (effect.visible === false) continue;
+      if (effect.type === "DROP_SHADOW" && effect.offset && effect.color) {
+        const { r, g, b, a = 1 } = effect.color;
+        lines.push(
+          `box-shadow: ${effect.offset.x}px ${effect.offset.y}px ${(_b = effect.radius) != null ? _b : 0}px ${(_c = effect.spread) != null ? _c : 0}px rgba(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}, ${a});`
+        );
+      } else if (effect.type === "INNER_SHADOW" && effect.offset && effect.color) {
+        const { r, g, b, a = 1 } = effect.color;
+        lines.push(
+          `box-shadow: inset ${effect.offset.x}px ${effect.offset.y}px ${(_d = effect.radius) != null ? _d : 0}px ${(_e = effect.spread) != null ? _e : 0}px rgba(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}, ${a});`
+        );
+      } else if (effect.type === "LAYER_BLUR") {
+        lines.push(`filter: blur(${(_f = effect.radius) != null ? _f : 0}px);`);
+      } else if (effect.type === "BACKGROUND_BLUR") {
+        lines.push(`backdrop-filter: blur(${(_g = effect.radius) != null ? _g : 0}px);`);
+      }
+    }
+    if (data.opacity !== void 0 && data.opacity < 1) {
+      lines.push(`opacity: ${data.opacity};`);
+    }
+    return lines.join("\n");
+  }
+  function generateTypographyCSS(data) {
+    var _a2, _b;
+    if (data.type !== "TEXT") return "";
+    const lines = [];
+    if (data.fontFamily && data.fontFamily !== "MIXED") {
+      lines.push(`font-family: '${data.fontFamily}', sans-serif;`);
+    } else if (data.fontFamily === "MIXED") {
+      lines.push("font-family: /* Mixed */;");
+    }
+    if (data.fontSize && data.fontSize !== "MIXED") {
+      lines.push(`font-size: ${data.fontSize}px;`);
+    }
+    if (data.fontWeight && data.fontWeight !== "MIXED") {
+      lines.push(`font-weight: ${data.fontWeight};`);
+    }
+    if (data.lineHeight && data.lineHeight !== "MIXED") {
+      const lh = data.lineHeight;
+      if (lh.unit === "PIXELS" && lh.value !== void 0) lines.push(`line-height: ${lh.value}px;`);
+      else if (lh.unit === "PERCENT" && lh.value !== void 0) lines.push(`line-height: ${lh.value}%;`);
+      else if (lh.unit === "AUTO") lines.push("line-height: normal;");
+    }
+    if (data.letterSpacing && data.letterSpacing !== "MIXED") {
+      const ls = data.letterSpacing;
+      if (ls.unit === "PIXELS" && ls.value !== void 0) lines.push(`letter-spacing: ${ls.value}px;`);
+      else if (ls.unit === "PERCENT" && ls.value !== void 0) lines.push(`letter-spacing: ${ls.value / 100}em;`);
+    }
+    if (data.textAlignHorizontal && data.textAlignHorizontal !== "MIXED") {
+      const map = {
+        LEFT: "left",
+        CENTER: "center",
+        RIGHT: "right",
+        JUSTIFIED: "justify"
+      };
+      lines.push(`text-align: ${(_a2 = map[data.textAlignHorizontal]) != null ? _a2 : "left"};`);
+    }
+    if (data.textDecoration && data.textDecoration !== "MIXED") {
+      const map = {
+        NONE: "none",
+        UNDERLINE: "underline",
+        STRIKETHROUGH: "line-through"
+      };
+      lines.push(`text-decoration: ${(_b = map[data.textDecoration]) != null ? _b : "none"};`);
+    }
+    return lines.join("\n");
+  }
+  function generateAllCSS(data, format = "HEX", variables = []) {
+    const parts = [
+      generateLayoutCSS(data),
+      generateStyleCSS(data, format, variables),
+      generateTypographyCSS(data)
+    ].filter(Boolean);
+    return parts.join("\n\n");
+  }
+  function highlightCSS(css) {
+    return css.split("\n").map((line) => {
+      const match = line.match(/^(\s*[\w-]+)(\s*:\s*)(.+?)(;?)$/);
+      if (!match) return escapeHtml(line);
+      const [, prop, colon, value, semi] = match;
+      return `<span class="css-prop">${escapeHtml(prop)}</span>${escapeHtml(colon)}<span class="css-val">${escapeHtml(value)}</span>${escapeHtml(semi)}`;
+    }).join("\n");
+  }
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // src/utils/platform-gen.ts
+  var justifyMap = {
+    MIN: "start",
+    CENTER: "center",
+    MAX: "end",
+    SPACE_BETWEEN: "spaceBetween"
+  };
+  var alignMap = {
+    MIN: "start",
+    CENTER: "center",
+    MAX: "end",
+    STRETCH: "stretch"
+  };
+  var textAlignMap = {
+    LEFT: "leading",
+    CENTER: "center",
+    RIGHT: "trailing",
+    JUSTIFIED: "justified"
+  };
+  function fillVariable(variables, data) {
+    return variables.find((v) => v.name && data.boundVariables["fills"]);
+  }
+  function firstSolidFill(data) {
+    return data.fills.find((f) => f.visible !== false && f.type === "SOLID" && f.color);
+  }
+  function firstSolidStroke(data) {
+    return data.strokes.find((s) => s.visible !== false && s.type === "SOLID" && s.color);
+  }
+  function generateIosLayout(data) {
+    var _a2, _b, _c, _d, _e, _f, _g, _h, _i;
+    const lines = [];
+    if (data.parentLayoutMode === "NONE" || !data.parentLayoutMode) {
+      if (data.x !== void 0 && data.y !== void 0) {
+        lines.push(`.offset(x: ${Math.round(data.x)}, y: ${Math.round(data.y)})`);
+      }
+    }
+    if (data.layoutAlign === "STRETCH") {
+      lines.push(".frame(maxWidth: .infinity)");
+    } else if (data.width || data.height) {
+      const w = data.width ? `width: ${Math.round(data.width)}` : "";
+      const h = data.height ? `height: ${Math.round(data.height)}` : "";
+      const parts = [w, h].filter(Boolean).join(", ");
+      if (parts) lines.push(`.frame(${parts})`);
+    }
+    const pt = (_a2 = data.paddingTop) != null ? _a2 : 0;
+    const pr = (_b = data.paddingRight) != null ? _b : 0;
+    const pb = (_c = data.paddingBottom) != null ? _c : 0;
+    const pl = (_d = data.paddingLeft) != null ? _d : 0;
+    if (pt || pr || pb || pl) {
+      if (pt === pb && pl === pr) {
+        if (pt === pl) lines.push(`.padding(${pt})`);
+        else lines.push(`.padding(.vertical, ${pt}).padding(.horizontal, ${pr})`);
+      } else {
+        lines.push(`.padding(EdgeInsets(top: ${pt}, leading: ${pl}, bottom: ${pb}, trailing: ${pr}))`);
+      }
+    }
+    if (data.layoutMode === "HORIZONTAL") {
+      const spacing = data.itemSpacing ? `, spacing: ${data.itemSpacing}` : "";
+      lines.push(`HStack(alignment: .${(_f = alignMap[(_e = data.counterAxisAlignItems) != null ? _e : "MIN"]) != null ? _f : "top"}${spacing}) { }`);
+    } else if (data.layoutMode === "VERTICAL") {
+      const spacing = data.itemSpacing ? `, spacing: ${data.itemSpacing}` : "";
+      lines.push(`VStack(alignment: .${(_h = alignMap[(_g = data.counterAxisAlignItems) != null ? _g : "MIN"]) != null ? _h : "leading"}${spacing}) { }`);
+    } else if (data.itemSpacing) {
+      lines.push(`// spacing: ${data.itemSpacing}`);
+    }
+    if (data.primaryAxisAlignItems && data.primaryAxisAlignItems !== "MIN") {
+      lines.push(`// main alignment: ${(_i = justifyMap[data.primaryAxisAlignItems]) != null ? _i : data.primaryAxisAlignItems}`);
+    }
+    return lines.join("\n");
+  }
+  function generateIosStyle(data, variables) {
+    var _a2, _b, _c, _d;
+    const lines = [];
+    const fillVar = fillVariable(variables, data);
+    const fill = firstSolidFill(data);
+    if (typeof data.cornerRadius === "number" && data.cornerRadius > 0) {
+      lines.push(`.cornerRadius(${data.cornerRadius})`);
+    } else if (data.cornerRadius === "MIXED" && data.cornerRadii) {
+      const { tl, tr, br, bl } = data.cornerRadii;
+      lines.push(`.clipShape(UnevenRoundedRectangle(topLeadingRadius: ${tl}, bottomLeadingRadius: ${bl}, bottomTrailingRadius: ${br}, topTrailingRadius: ${tr}))`);
+    }
+    if (fill == null ? void 0 : fill.color) {
+      lines.push(`.background(${swiftColor(fill.color, (_a2 = fill.opacity) != null ? _a2 : 1, fillVar)})`);
+    }
+    const stroke = firstSolidStroke(data);
+    if ((stroke == null ? void 0 : stroke.color) && data.strokeWeight) {
+      const radius = typeof data.cornerRadius === "number" ? data.cornerRadius : 0;
+      lines.push(`.overlay(`);
+      lines.push(`  RoundedRectangle(cornerRadius: ${radius})`);
+      lines.push(`    .stroke(${swiftColor(stroke.color, (_b = stroke.opacity) != null ? _b : 1)}, lineWidth: ${data.strokeWeight})`);
+      lines.push(`)`);
+    }
+    for (const effect of data.effects) {
+      if (effect.visible === false) continue;
+      if (effect.type === "DROP_SHADOW" && effect.offset && effect.color) {
+        const c = effect.color;
+        lines.push(`.shadow(color: ${swiftColor(c, (_c = c.a) != null ? _c : 1)}, radius: ${(_d = effect.radius) != null ? _d : 0}, x: ${effect.offset.x}, y: ${effect.offset.y})`);
+      }
+    }
+    if (data.opacity !== void 0 && data.opacity < 1) {
+      lines.push(`.opacity(${data.opacity})`);
+    }
+    return lines.join("\n");
+  }
+  function generateIosTypography(data) {
+    var _a2, _b;
+    if (data.type !== "TEXT") return "";
+    const lines = [];
+    if (data.fontFamily && data.fontFamily !== "MIXED" && data.fontSize && data.fontSize !== "MIXED") {
+      lines.push(`.font(.custom("${data.fontFamily}", size: ${data.fontSize}))`);
+    } else if (data.fontSize && data.fontSize !== "MIXED") {
+      const weight = data.fontWeight && data.fontWeight !== "MIXED" ? `.weight(.${iosWeight(data.fontWeight)})` : "";
+      lines.push(`.font(.system(size: ${data.fontSize}${weight}))`);
+    }
+    if (data.letterSpacing && data.letterSpacing !== "MIXED" && data.letterSpacing.unit === "PIXELS") {
+      lines.push(`.tracking(${(_a2 = data.letterSpacing.value) != null ? _a2 : 0})`);
+    }
+    if (data.textAlignHorizontal && data.textAlignHorizontal !== "MIXED") {
+      lines.push(`.multilineTextAlignment(.${(_b = textAlignMap[data.textAlignHorizontal]) != null ? _b : "leading"})`);
+    }
+    if (data.textDecoration === "UNDERLINE") lines.push(".underline()");
+    if (data.textDecoration === "STRIKETHROUGH") lines.push(".strikethrough()");
+    return lines.join("\n");
+  }
+  function iosWeight(weight) {
+    if (weight >= 700) return "bold";
+    if (weight >= 500) return "medium";
+    if (weight >= 300) return "light";
+    return "regular";
+  }
+  function generateAndroidLayout(data) {
+    var _a2, _b, _c, _d, _e;
+    const lines = ["Modifier"];
+    if (data.layoutAlign === "STRETCH") {
+      lines.push("    .fillMaxWidth()");
+    } else if (data.width) {
+      lines.push(`    .width(${Math.round(data.width)}.dp)`);
+    }
+    if (data.height) {
+      lines.push(`    .height(${Math.round(data.height)}.dp)`);
+    }
+    if (data.x !== void 0 && data.y !== void 0 && (data.parentLayoutMode === "NONE" || !data.parentLayoutMode)) {
+      lines.push(`    .offset(x = ${Math.round(data.x)}.dp, y = ${Math.round(data.y)}.dp)`);
+    }
+    const pt = (_a2 = data.paddingTop) != null ? _a2 : 0;
+    const pr = (_b = data.paddingRight) != null ? _b : 0;
+    const pb = (_c = data.paddingBottom) != null ? _c : 0;
+    const pl = (_d = data.paddingLeft) != null ? _d : 0;
+    if (pt || pr || pb || pl) {
+      lines.push(`    .padding(top = ${pt}.dp, start = ${pl}.dp, bottom = ${pb}.dp, end = ${pr}.dp)`);
+    }
+    if (data.layoutMode === "HORIZONTAL") {
+      const spacing = data.itemSpacing ? ` spacedBy(${data.itemSpacing}.dp)` : "";
+      lines.push(`// Row(horizontalArrangement = Arrangement.${androidJustify(data.primaryAxisAlignItems)}${spacing})`);
+    } else if (data.layoutMode === "VERTICAL") {
+      const spacing = data.itemSpacing ? ` spacedBy(${data.itemSpacing}.dp)` : "";
+      lines.push(`// Column(verticalArrangement = Arrangement.${androidJustify(data.primaryAxisAlignItems)}${spacing})`);
+    } else if (data.itemSpacing) {
+      lines.push(`// spacing: ${data.itemSpacing}.dp`);
+    }
+    if (data.counterAxisAlignItems && data.counterAxisAlignItems !== "MIN") {
+      lines.push(`// cross alignment: ${(_e = alignMap[data.counterAxisAlignItems]) != null ? _e : data.counterAxisAlignItems}`);
+    }
+    return lines.join("\n");
+  }
+  function androidJustify(value) {
+    var _a2;
+    const map = {
+      MIN: "Start",
+      CENTER: "Center",
+      MAX: "End",
+      SPACE_BETWEEN: "SpaceBetween"
+    };
+    return (_a2 = map[value != null ? value : "MIN"]) != null ? _a2 : "Start";
+  }
+  function generateAndroidStyle(data, variables) {
+    var _a2, _b, _c;
+    const lines = ["Modifier"];
+    const fillVar = fillVariable(variables, data);
+    const fill = firstSolidFill(data);
+    if (fill == null ? void 0 : fill.color) {
+      lines.push(`    .background(${kotlinColor(fill.color, (_a2 = fill.opacity) != null ? _a2 : 1, fillVar)})`);
+    }
+    if (typeof data.cornerRadius === "number" && data.cornerRadius > 0) {
+      lines.push(`    .clip(RoundedCornerShape(${data.cornerRadius}.dp))`);
+    } else if (data.cornerRadius === "MIXED" && data.cornerRadii) {
+      const { tl, tr, br, bl } = data.cornerRadii;
+      lines.push(`    .clip(RoundedCornerShape(topStart = ${tl}.dp, topEnd = ${tr}.dp, bottomEnd = ${br}.dp, bottomStart = ${bl}.dp))`);
+    }
+    const stroke = firstSolidStroke(data);
+    if ((stroke == null ? void 0 : stroke.color) && data.strokeWeight) {
+      const radius = typeof data.cornerRadius === "number" ? data.cornerRadius : 0;
+      lines.push(`    .border(${data.strokeWeight}.dp, ${kotlinColor(stroke.color, (_b = stroke.opacity) != null ? _b : 1)}, RoundedCornerShape(${radius}.dp))`);
+    }
+    for (const effect of data.effects) {
+      if (effect.visible === false || effect.type !== "DROP_SHADOW") continue;
+      lines.push(`    .shadow(elevation = ${(_c = effect.radius) != null ? _c : 4}.dp)`);
+      break;
+    }
+    if (data.opacity !== void 0 && data.opacity < 1) {
+      lines.push(`    .alpha(${data.opacity}f)`);
+    }
+    return lines.join("\n");
+  }
+  function generateAndroidTypography(data) {
+    var _a2;
+    if (data.type !== "TEXT") return "";
+    const lines = ["Text("];
+    lines.push('    text = "...",');
+    if (data.fontSize && data.fontSize !== "MIXED") {
+      lines.push(`    fontSize = ${data.fontSize}.sp,`);
+    }
+    if (data.fontWeight && data.fontWeight !== "MIXED") {
+      lines.push(`    fontWeight = FontWeight(${androidWeight(data.fontWeight)}),`);
+    }
+    if (data.fontFamily && data.fontFamily !== "MIXED") {
+      lines.push(`    fontFamily = FontFamily(Font(R.font.${tokenName(data.fontFamily).toLowerCase()})),`);
+    }
+    if (data.letterSpacing && data.letterSpacing !== "MIXED" && data.letterSpacing.unit === "PIXELS") {
+      lines.push(`    letterSpacing = ${(_a2 = data.letterSpacing.value) != null ? _a2 : 0}.sp,`);
+    }
+    if (data.textAlignHorizontal && data.textAlignHorizontal !== "MIXED") {
+      lines.push(`    textAlign = TextAlign.${androidTextAlign(data.textAlignHorizontal)},`);
+    }
+    if (data.textDecoration === "UNDERLINE") lines.push("    textDecoration = TextDecoration.Underline,");
+    if (data.textDecoration === "STRIKETHROUGH") lines.push("    textDecoration = TextDecoration.LineThrough,");
+    lines.push(")");
+    return lines.join("\n");
+  }
+  function androidWeight(weight) {
+    if (weight >= 700) return "Bold";
+    if (weight >= 500) return "Medium";
+    if (weight >= 300) return "Light";
+    return "Normal";
+  }
+  function androidTextAlign(value) {
+    var _a2;
+    const map = {
+      LEFT: "Start",
+      CENTER: "Center",
+      RIGHT: "End",
+      JUSTIFIED: "Justify"
+    };
+    return (_a2 = map[value]) != null ? _a2 : "Start";
+  }
+  function generateFlutterLayout(data) {
+    var _a2, _b, _c, _d;
+    const lines = [];
+    if (data.layoutMode === "HORIZONTAL") {
+      lines.push("Row(");
+      lines.push(`  mainAxisAlignment: MainAxisAlignment.${flutterJustify(data.primaryAxisAlignItems)},`);
+      lines.push(`  crossAxisAlignment: CrossAxisAlignment.${flutterAlign(data.counterAxisAlignItems)},`);
+      if (data.itemSpacing) lines.push(`  spacing: ${data.itemSpacing},`);
+      lines.push("  children: [");
+      lines.push("    // ...");
+      lines.push("  ],");
+      lines.push(")");
+      return lines.join("\n");
+    }
+    if (data.layoutMode === "VERTICAL") {
+      lines.push("Column(");
+      lines.push(`  mainAxisAlignment: MainAxisAlignment.${flutterJustify(data.primaryAxisAlignItems)},`);
+      lines.push(`  crossAxisAlignment: CrossAxisAlignment.${flutterAlign(data.counterAxisAlignItems)},`);
+      if (data.itemSpacing) lines.push(`  spacing: ${data.itemSpacing},`);
+      lines.push("  children: [");
+      lines.push("    // ...");
+      lines.push("  ],");
+      lines.push(")");
+      return lines.join("\n");
+    }
+    lines.push("Container(");
+    if (data.width) lines.push(`  width: ${Math.round(data.width)},`);
+    if (data.height) lines.push(`  height: ${Math.round(data.height)},`);
+    const pt = (_a2 = data.paddingTop) != null ? _a2 : 0;
+    const pr = (_b = data.paddingRight) != null ? _b : 0;
+    const pb = (_c = data.paddingBottom) != null ? _c : 0;
+    const pl = (_d = data.paddingLeft) != null ? _d : 0;
+    if (pt || pr || pb || pl) {
+      lines.push(`  padding: EdgeInsets.fromLTRB(${pl}, ${pt}, ${pr}, ${pb}),`);
+    }
+    if (data.x !== void 0 && data.y !== void 0 && (data.parentLayoutMode === "NONE" || !data.parentLayoutMode)) {
+      lines.push("  // Position in Stack:");
+      lines.push(`  // left: ${Math.round(data.x)}, top: ${Math.round(data.y)},`);
+    }
+    lines.push("  child: ...,");
+    lines.push(")");
+    return lines.join("\n");
+  }
+  function flutterJustify(value) {
+    var _a2;
+    const map = {
+      MIN: "start",
+      CENTER: "center",
+      MAX: "end",
+      SPACE_BETWEEN: "spaceBetween"
+    };
+    return (_a2 = map[value != null ? value : "MIN"]) != null ? _a2 : "start";
+  }
+  function flutterAlign(value) {
+    var _a2;
+    const map = {
+      MIN: "start",
+      CENTER: "center",
+      MAX: "end",
+      STRETCH: "stretch"
+    };
+    return (_a2 = map[value != null ? value : "MIN"]) != null ? _a2 : "start";
+  }
+  function generateFlutterStyle(data, variables) {
+    var _a2, _b, _c, _d, _e, _f, _g, _h;
+    const lines = ["Container("];
+    const fillVar = fillVariable(variables, data);
+    const fill = firstSolidFill(data);
+    const hasDecoration = !!((fill == null ? void 0 : fill.color) || data.cornerRadius || firstSolidStroke(data) || data.effects.some((e) => e.visible !== false && e.type === "DROP_SHADOW"));
+    if (data.width) lines.push(`  width: ${Math.round(data.width)},`);
+    if (data.height) lines.push(`  height: ${Math.round(data.height)},`);
+    const pt = (_a2 = data.paddingTop) != null ? _a2 : 0;
+    const pr = (_b = data.paddingRight) != null ? _b : 0;
+    const pb = (_c = data.paddingBottom) != null ? _c : 0;
+    const pl = (_d = data.paddingLeft) != null ? _d : 0;
+    if (pt || pr || pb || pl) {
+      lines.push(`  padding: EdgeInsets.fromLTRB(${pl}, ${pt}, ${pr}, ${pb}),`);
+    }
+    if (hasDecoration) {
+      lines.push("  decoration: BoxDecoration(");
+      if (fill == null ? void 0 : fill.color) {
+        lines.push(`    color: ${flutterColor(fill.color, (_e = fill.opacity) != null ? _e : 1, fillVar)},`);
+      }
+      if (typeof data.cornerRadius === "number" && data.cornerRadius > 0) {
+        lines.push(`    borderRadius: BorderRadius.circular(${data.cornerRadius}),`);
+      } else if (data.cornerRadius === "MIXED" && data.cornerRadii) {
+        const { tl, tr, br, bl } = data.cornerRadii;
+        lines.push(`    borderRadius: BorderRadius.only(`);
+        lines.push(`      topLeft: Radius.circular(${tl}),`);
+        lines.push(`      topRight: Radius.circular(${tr}),`);
+        lines.push(`      bottomRight: Radius.circular(${br}),`);
+        lines.push(`      bottomLeft: Radius.circular(${bl}),`);
+        lines.push("    ),");
+      }
+      const stroke = firstSolidStroke(data);
+      if ((stroke == null ? void 0 : stroke.color) && data.strokeWeight) {
+        lines.push(`    border: Border.all(`);
+        lines.push(`      color: ${flutterColor(stroke.color, (_f = stroke.opacity) != null ? _f : 1)},`);
+        lines.push(`      width: ${data.strokeWeight},`);
+        lines.push("    ),");
+      }
+      const shadow = data.effects.find((e) => e.visible !== false && e.type === "DROP_SHADOW" && e.offset && e.color);
+      if ((shadow == null ? void 0 : shadow.offset) && shadow.color) {
+        const c = shadow.color;
+        lines.push("    boxShadow: [");
+        lines.push("      BoxShadow(");
+        lines.push(`        color: ${flutterColor(c, (_g = c.a) != null ? _g : 1)},`);
+        lines.push(`        blurRadius: ${(_h = shadow.radius) != null ? _h : 0},`);
+        lines.push(`        offset: Offset(${shadow.offset.x}, ${shadow.offset.y}),`);
+        lines.push("      ),");
+        lines.push("    ],");
+      }
+      lines.push("  ),");
+    }
+    if (data.opacity !== void 0 && data.opacity < 1) {
+      lines.push(`  // opacity: ${data.opacity} \u2014 wrap with Opacity(opacity: ${data.opacity}, child: ...)`);
+    }
+    lines.push("  child: ...,");
+    lines.push(")");
+    return lines.join("\n");
+  }
+  function generateFlutterTypography(data) {
+    var _a2, _b;
+    if (data.type !== "TEXT") return "";
+    const lines = ["Text("];
+    lines.push("  '...',");
+    lines.push("  style: TextStyle(");
+    if (data.fontFamily && data.fontFamily !== "MIXED") {
+      lines.push(`    fontFamily: '${data.fontFamily}',`);
+    }
+    if (data.fontSize && data.fontSize !== "MIXED") {
+      lines.push(`    fontSize: ${data.fontSize},`);
+    }
+    if (data.fontWeight && data.fontWeight !== "MIXED") {
+      lines.push(`    fontWeight: FontWeight.w${data.fontWeight},`);
+    }
+    if (data.lineHeight && data.lineHeight !== "MIXED" && data.lineHeight.unit === "PIXELS" && data.fontSize && data.fontSize !== "MIXED") {
+      const height = ((_a2 = data.lineHeight.value) != null ? _a2 : data.fontSize) / data.fontSize;
+      lines.push(`    height: ${height.toFixed(2)},`);
+    }
+    if (data.letterSpacing && data.letterSpacing !== "MIXED" && data.letterSpacing.unit === "PIXELS") {
+      lines.push(`    letterSpacing: ${(_b = data.letterSpacing.value) != null ? _b : 0},`);
+    }
+    if (data.textDecoration === "UNDERLINE") lines.push("    decoration: TextDecoration.underline,");
+    if (data.textDecoration === "STRIKETHROUGH") lines.push("    decoration: TextDecoration.lineThrough,");
+    lines.push("  ),");
+    if (data.textAlignHorizontal && data.textAlignHorizontal !== "MIXED") {
+      lines.push(`  textAlign: TextAlign.${flutterTextAlign(data.textAlignHorizontal)},`);
+    }
+    lines.push(")");
+    return lines.join("\n");
+  }
+  function flutterTextAlign(value) {
+    var _a2;
+    const map = {
+      LEFT: "left",
+      CENTER: "center",
+      RIGHT: "right",
+      JUSTIFIED: "justify"
+    };
+    return (_a2 = map[value]) != null ? _a2 : "left";
+  }
+  function generateLayoutCode(platform, data, _ctx) {
+    if (platform === "css") return generateLayoutCSS(data);
+    if (platform === "ios") return generateIosLayout(data);
+    if (platform === "android") return generateAndroidLayout(data);
+    return generateFlutterLayout(data);
+  }
+  function generateStyleCode(platform, data, ctx) {
+    if (platform === "css") return generateStyleCSS(data, ctx.colorFormat, ctx.variables);
+    if (platform === "ios") return generateIosStyle(data, ctx.variables);
+    if (platform === "android") return generateAndroidStyle(data, ctx.variables);
+    return generateFlutterStyle(data, ctx.variables);
+  }
+  function generateTypographyCode(platform, data, _ctx) {
+    if (platform === "css") return generateTypographyCSS(data);
+    if (platform === "ios") return generateIosTypography(data);
+    if (platform === "android") return generateAndroidTypography(data);
+    return generateFlutterTypography(data);
+  }
+  function generateAllCode(platform, data, ctx) {
+    if (platform === "css") return generateAllCSS(data, ctx.colorFormat, ctx.variables);
+    const parts = [
+      generateLayoutCode(platform, data, ctx),
+      generateStyleCode(platform, data, ctx),
+      generateTypographyCode(platform, data, ctx)
+    ].filter(Boolean);
+    return parts.join("\n\n");
+  }
+  function generateVariablesCode(platform, variables, colorFormat2) {
+    if (!variables.length) return "";
+    return variables.map((v) => {
+      const val = formatVariableValue(platform, v, colorFormat2);
+      if (platform === "ios") return `// ${v.collection}/${v.name}
+let ${tokenName(v.name)} = ${val}`;
+      if (platform === "android") return `// ${v.collection}/${v.name}
+val ${tokenName(v.name)} = ${val}`;
+      if (platform === "flutter") return `// ${v.collection}/${v.name}
+const ${tokenName(v.name)} = ${val};`;
+      return `${v.cssName}: ${val};`;
+    }).join("\n");
+  }
+  function generateColorsCode(platform, colors, colorFormat2) {
+    if (!colors.length) return "";
+    return colors.map((c) => {
+      const rgb = hexToRgb(c.hex);
+      if (!rgb) return `${c.hex}`;
+      if (platform === "ios") {
+        const label2 = c.variable ? `// ${c.variable.name}
+` : "";
+        return `${label2}${swiftColor(rgb, 1, c.variable)}`;
+      }
+      if (platform === "android") return kotlinColor(rgb, 1, c.variable);
+      if (platform === "flutter") return flutterColor(rgb, 1, c.variable);
+      const label = c.variable ? c.variable.cssName : c.hex;
+      const display = colorFormat2 === "RGB" ? c.rgba : c.hex;
+      return `${label}: ${display};`;
+    }).join("\n");
+  }
+  function formatVariableValue(platform, v, colorFormat2) {
+    if (v.resolvedType === "COLOR" && v.value && typeof v.value === "object" && "r" in v.value) {
+      const c = v.value;
+      if (platform === "ios") return swiftColor(c, 1, v);
+      if (platform === "android") return kotlinColor(c, 1, v);
+      if (platform === "flutter") return flutterColor(c, 1, v);
+      return formatColor(c, 1, colorFormat2, v);
+    }
+    if (v.resolvedType === "FLOAT") {
+      const n = Number(v.value);
+      if (platform === "android") return `${n}.dp`;
+      if (platform === "flutter") return `${n}`;
+      return String(v.value);
+    }
+    if (v.resolvedType === "BOOLEAN") return String(v.value);
+    if (v.resolvedType === "STRING") return platform === "ios" ? `"${v.value}"` : `"${v.value}"`;
+    return "\u2014";
+  }
+  function hexToRgb(hex) {
+    const m = hex.replace("#", "").match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+    if (!m) return null;
+    return {
+      r: parseInt(m[1], 16) / 255,
+      g: parseInt(m[2], 16) / 255,
+      b: parseInt(m[3], 16) / 255
+    };
+  }
+  function highlightCode(platform, code) {
+    if (platform === "css") return highlightCSS(code);
+    return code.split("\n").map((line) => {
+      const comment = line.match(/^(\s*)(\/\/.*)$/);
+      if (comment) return `${escapeHtml2(comment[1])}<span class="css-prop">${escapeHtml2(comment[2])}</span>`;
+      const swiftMod = line.match(/^(\s*)(\.\w+\(.*)$/);
+      if (swiftMod && platform === "ios") {
+        return `${escapeHtml2(swiftMod[1])}<span class="css-val">${escapeHtml2(swiftMod[2])}</span>`;
+      }
+      const keyVal = line.match(/^(\s*)([\w.]+)(\s*[:=]\s*)(.+)$/);
+      if (keyVal) {
+        const [, indent, key, sep, value] = keyVal;
+        return `${escapeHtml2(indent)}<span class="css-prop">${escapeHtml2(key)}</span>${escapeHtml2(sep)}<span class="css-val">${escapeHtml2(value)}</span>`;
+      }
+      return escapeHtml2(line);
+    }).join("\n");
+  }
+  function escapeHtml2(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // src/ui.ts
+  var currentData = null;
+  var currentVariables = [];
+  var currentColors = [];
+  var viewMode = "list";
+  var codePlatform = "css";
+  var colorFormat = "HEX";
+  var spacingEnabled = false;
+  var exportTab = "filtered";
+  var collapsedSections = /* @__PURE__ */ new Set();
+  var emptyState = document.getElementById("empty-state");
+  var inspectDataEl = document.getElementById("inspect-data");
+  var exportContent = document.getElementById("export-content");
+  var spacingToggle = document.getElementById("spacing-toggle");
+  var codePlatformSelect = document.getElementById("code-platform");
+  var colorFormatSelect = document.getElementById("color-format");
+  document.querySelectorAll(".tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      const name = tab.getAttribute("data-tab");
+      document.getElementById("inspect-panel").classList.toggle("hidden", name !== "inspect");
+      document.getElementById("export-panel").classList.toggle("hidden", name !== "export");
+    });
+  });
+  document.querySelectorAll(".sub-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".sub-tab").forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      viewMode = tab.getAttribute("data-view");
+      render();
+    });
+  });
+  spacingToggle.addEventListener("click", () => {
+    spacingEnabled = !spacingEnabled;
+    spacingToggle.classList.toggle("active", spacingEnabled);
+    parent.postMessage({ pluginMessage: { type: "TOGGLE_SPACING", enabled: spacingEnabled } }, "*");
+  });
+  colorFormatSelect.addEventListener("change", () => {
+    colorFormat = colorFormatSelect.value;
+    render();
+  });
+  codePlatformSelect.addEventListener("change", () => {
+    codePlatform = codePlatformSelect.value;
+    syncColorFormatOptions();
+    render();
+  });
+  function syncColorFormatOptions() {
+    const cssVarOption = colorFormatSelect.querySelector('option[value="CSS var"]');
+    const hslOption = colorFormatSelect.querySelector('option[value="HSL"]');
+    const isCss = codePlatform === "css";
+    if (cssVarOption) cssVarOption.hidden = !isCss;
+    if (hslOption) hslOption.hidden = !isCss;
+    colorFormatSelect.style.display = isCss ? "" : "none";
+    if (!isCss && (colorFormat === "CSS var" || colorFormat === "HSL")) {
+      colorFormat = "HEX";
+      colorFormatSelect.value = "HEX";
+    }
+  }
+  syncColorFormatOptions();
+  var _a;
+  (_a = document.getElementById("export-sub-tabs")) == null ? void 0 : _a.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-export-tab]");
+    if (!btn) return;
+    exportTab = btn.getAttribute("data-export-tab");
+    document.querySelectorAll("#export-sub-tabs .sub-tab").forEach((t) => t.classList.remove("active"));
+    btn.classList.add("active");
+    renderExport();
+  });
+  function showCopied(btn) {
+    const orig = btn.textContent;
+    btn.textContent = "\u2713";
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove("copied");
+    }, 1500);
+  }
+  async function copyText(text, btn) {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (btn) showCopied(btn);
+    } catch (e) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      if (btn) showCopied(btn);
+    }
+  }
+  function formatVariableDisplay(v) {
+    return formatVariableValue(codePlatform, v, colorFormat);
+  }
+  function codeContext() {
+    return { colorFormat, variables: currentVariables };
+  }
+  function renderSection(id, title, code, listHtml, codeFallbackToList = false) {
+    const collapsed = collapsedSections.has(id);
+    if (viewMode === "code") {
+      const highlighted = highlightCode(codePlatform, code);
+      const showListInCode = codeFallbackToList && !code.trim() && listHtml;
+      const bodyContent = highlighted ? `<div class="code-block"><pre>${highlighted}</pre></div>` : showListInCode ? listHtml : '<span style="color:var(--text-secondary)">\u2014</span>';
+      return `
+      <div class="section ${collapsed ? "collapsed" : ""}" data-section="${id}">
+        <div class="section-header">
+          <span class="section-title">${title}</span>
+          <div class="section-actions">
+            <button class="icon-btn copy-section" data-section="${id}" title="Copy code">\u2398</button>
+            <button class="icon-btn collapse-btn" data-section="${id}">${collapsed ? "\u25B8" : "\u25BE"}</button>
+          </div>
+        </div>
+        <div class="section-body">${bodyContent}</div>
+      </div>`;
+    }
+    return `
+    <div class="section ${collapsed ? "collapsed" : ""}" data-section="${id}">
+      <div class="section-header">
+        <span class="section-title">${title}</span>
+        <div class="section-actions">
+          <button class="icon-btn copy-section" data-section="${id}" title="Copy code">\u2398</button>
+          <button class="icon-btn collapse-btn" data-section="${id}">${collapsed ? "\u25B8" : "\u25BE"}</button>
+        </div>
+      </div>
+      <div class="section-body">${listHtml || '<span style="color:var(--text-secondary)">\u2014</span>'}</div>
+    </div>`;
+  }
+  function attrEscape(s) {
+    return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  }
+  function codeToRows(code) {
+    if (!code.trim()) return "";
+    return code.split("\n").filter(Boolean).map((line) => {
+      const trimmed = line.trim();
+      return `<div class="prop-row">
+        <span class="prop-name"></span>
+        <span class="prop-value mono">${escapeHtml3(trimmed)}</span>
+        <button class="icon-btn copy-prop" data-copy="${attrEscape(trimmed)}" title="Copy">\u2398</button>
+      </div>`;
+    }).join("");
+  }
+  function cssToRows(css) {
+    if (!css.trim()) return "";
+    return css.split("\n").filter(Boolean).map((line) => {
+      const trimmed = line.trim();
+      const [prop, ...rest] = trimmed.replace(/;$/, "").split(":");
+      if (!prop || !rest.length) return "";
+      const value = rest.join(":").trim();
+      const copyVal = `${prop.trim()}: ${value};`;
+      return `<div class="prop-row">
+        <span class="prop-name">${escapeHtml3(prop.trim())}</span>
+        <span class="prop-value">${escapeHtml3(value)}</span>
+        <button class="icon-btn copy-prop" data-copy="${attrEscape(copyVal)}" title="Copy">\u2398</button>
+      </div>`;
+    }).join("");
+  }
+  function codeToListRows(code) {
+    return codePlatform === "css" ? cssToRows(code) : codeToRows(code);
+  }
+  function dashVal(n) {
+    return n > 0 ? String(Math.round(n)) : "\u2014";
+  }
+  function renderBoxModel(bm) {
+    const collapsed = collapsedSections.has("boxmodel");
+    return `
+    <div class="section ${collapsed ? "collapsed" : ""}" data-section="boxmodel">
+      <div class="section-header">
+        <span class="section-title">Layer properties</span>
+        <div class="section-actions">
+          <button class="icon-btn collapse-btn" data-section="boxmodel">${collapsed ? "\u25B8" : "\u25BE"}</button>
+        </div>
+      </div>
+      <div class="section-body box-model-section" style="padding-top:0">
+        <div class="box-model-wrap">
+          <div class="box-model-outer">
+            ${bm.marginTop !== void 0 ? `<div class="margin-indicator top">${bm.marginTop}</div>` : '<div class="margin-indicator top">\u2014</div>'}
+            <div class="box-model-middle">
+              ${bm.marginLeft !== void 0 ? `<div class="margin-indicator side">${bm.marginLeft}</div>` : '<div class="margin-indicator side">\u2014</div>'}
+              <div class="box-border">
+                <span class="box-border-label">Border</span>
+                <span class="radius-label tl">${dashVal(bm.radiusTl)}</span>
+                <span class="radius-label tr">${dashVal(bm.radiusTr)}</span>
+                <span class="radius-label bl">${dashVal(bm.radiusBl)}</span>
+                <span class="radius-label br">${dashVal(bm.radiusBr)}</span>
+                <span class="border-weight top">${dashVal(bm.borderTop)}</span>
+                <span class="border-weight bottom">${dashVal(bm.borderBottom)}</span>
+                <span class="border-weight left">${dashVal(bm.borderLeft)}</span>
+                <span class="border-weight right">${dashVal(bm.borderRight)}</span>
+                <div class="box-padding">
+                  <span class="box-padding-label">Padding</span>
+                  <span class="pad-label top">${dashVal(bm.paddingTop)}</span>
+                  <span class="pad-label bottom">${dashVal(bm.paddingBottom)}</span>
+                  <span class="pad-label left">${dashVal(bm.paddingLeft)}</span>
+                  <span class="pad-label right">${dashVal(bm.paddingRight)}</span>
+                  <div class="box-content">${bm.contentWidth} \xD7 ${bm.contentHeight}</div>
+                </div>
+              </div>
+              ${bm.marginRight !== void 0 ? `<div class="margin-indicator side">${bm.marginRight}</div>` : '<div class="margin-indicator side">\u2014</div>'}
+            </div>
+            ${bm.marginBottom !== void 0 ? `<div class="margin-indicator bottom">${bm.marginBottom}</div>` : '<div class="margin-indicator bottom">\u2014</div>'}
+          </div>
+          <span class="box-sizing-tag">border-box</span>
+        </div>
+      </div>
+    </div>`;
+  }
+  function colorDisplay(c) {
+    if (codePlatform === "css" && c.variable && colorFormat === "CSS var") return `var(${c.variable.cssName})`;
+    if (codePlatform === "css" && colorFormat === "RGB") return c.rgba;
+    if (codePlatform === "ios" || codePlatform === "android" || codePlatform === "flutter") {
+      const rgb = hexToRgbLocal(c.hex);
+      if (!rgb) return c.hex;
+      if (codePlatform === "ios") return c.variable ? `Color("${c.variable.name}")` : c.hex;
+      if (codePlatform === "android") return c.variable ? `colorResource(...)` : `Color(${c.hex.replace("#", "0xFF")})`;
+      return c.variable ? `AppColors.${c.variable.name.replace(/\//g, "")}` : `Color(0xFF${c.hex.replace("#", "")})`;
+    }
+    return c.hex;
+  }
+  function hexToRgbLocal(hex) {
+    const m = hex.replace("#", "").match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+    if (!m) return null;
+    return {
+      r: parseInt(m[1], 16) / 255,
+      g: parseInt(m[2], 16) / 255,
+      b: parseInt(m[3], 16) / 255
+    };
+  }
+  function renderColorsList(colors) {
+    return colors.map((c) => {
+      const display = colorDisplay(c);
+      const label = c.variable ? c.variable.name : display;
+      const usageRows = c.usages.map((u) => `<div class="color-usage-item">${escapeHtml3(u.usage)} \xB7 ${escapeHtml3(u.nodeName)}</div>`).join("");
+      return `
+        <div class="color-group">
+          <div class="color-row-main">
+            <div class="swatch" style="background:${c.hex}" data-copy="${attrEscape(display)}" title="Click to copy"></div>
+            <div class="color-info">
+              <div class="color-var">${escapeHtml3(label)}</div>
+              <div class="color-hex">${escapeHtml3(display)}</div>
+            </div>
+            <button class="icon-btn copy-prop" data-copy="${attrEscape(display)}" title="Copy">\u2398</button>
+          </div>
+          <div class="color-usages">${usageRows}</div>
+        </div>`;
+    }).join("");
+  }
+  function renderColorsSection(colors) {
+    if (!colors.length) return "";
+    const code = generateColorsCode(codePlatform, colors, colorFormat);
+    return renderSection("colors", "Colors", code, renderColorsList(colors), !code.trim());
+  }
+  function renderVariablesList(variables) {
+    return variables.map((v) => {
+      const val = formatVariableDisplay(v);
+      return `
+      <div class="var-row">
+        <span class="var-name">${escapeHtml3(v.name)}</span>
+        <span class="var-value">${escapeHtml3(val)}</span>
+        <button class="icon-btn copy-prop" data-copy="${attrEscape(val)}" title="Copy">\u2398</button>
+      </div>`;
+    }).join("");
+  }
+  function renderVariablesSection(variables) {
+    if (!variables.length) return "";
+    const code = generateVariablesCode(codePlatform, variables, colorFormat);
+    return renderSection("variables", "Variables", code, renderVariablesList(variables), !code.trim());
+  }
+  function variablesToCopyText(variables) {
+    return generateVariablesCode(codePlatform, variables, colorFormat);
+  }
+  function colorsToCopyText(colors) {
+    return generateColorsCode(codePlatform, colors, colorFormat);
+  }
+  function render() {
+    if (!currentData) {
+      emptyState.classList.remove("hidden");
+      inspectDataEl.classList.add("hidden");
+      return;
+    }
+    emptyState.classList.add("hidden");
+    inspectDataEl.classList.remove("hidden");
+    const d = currentData;
+    const ctx = codeContext();
+    const layoutCode = generateLayoutCode(codePlatform, d, ctx);
+    const styleCode = generateStyleCode(codePlatform, d, ctx);
+    const typoCode = generateTypographyCode(codePlatform, d, ctx);
+    let html = `
+    <div class="node-header">
+      <div class="node-name">
+        <span>${escapeHtml3(d.name)}</span>
+        <span class="node-type">${d.type}</span>
+      </div>
+      <div class="node-size">${d.width} \xD7 ${d.height}</div>
+      ${d.masterComponentName ? `<div class="master-link">\u21B3 ${escapeHtml3(d.masterComponentName)}</div>` : ""}
+    </div>`;
+    if (d.boxModel) {
+      html += renderBoxModel(d.boxModel);
+    }
+    html += renderSection("layout", "Layout", layoutCode, codeToListRows(layoutCode));
+    html += renderSection("style", "Style", styleCode, codeToListRows(styleCode));
+    if (d.type === "TEXT") {
+      html += renderSection("typography", "Typography", typoCode, codeToListRows(typoCode));
+    }
+    html += renderVariablesSection(currentVariables);
+    html += renderColorsSection(currentColors);
+    inspectDataEl.innerHTML = html;
+    bindSectionEvents();
+  }
+  function bindSectionEvents() {
+    document.querySelectorAll(".section-header").forEach((header) => {
+      header.addEventListener("click", (e) => {
+        if (e.target.closest(".icon-btn")) return;
+        const section = header.closest(".section");
+        const id = section.getAttribute("data-section");
+        if (collapsedSections.has(id)) collapsedSections.delete(id);
+        else collapsedSections.add(id);
+        section.classList.toggle("collapsed");
+        const btn = section.querySelector(".collapse-btn");
+        if (btn) btn.textContent = collapsedSections.has(id) ? "\u25B8" : "\u25BE";
+      });
+    });
+    document.querySelectorAll(".collapse-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute("data-section");
+        const section = btn.closest(".section");
+        if (collapsedSections.has(id)) collapsedSections.delete(id);
+        else collapsedSections.add(id);
+        section.classList.toggle("collapsed");
+        btn.textContent = collapsedSections.has(id) ? "\u25B8" : "\u25BE";
+      });
+    });
+    document.querySelectorAll(".copy-section").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (!currentData) return;
+        const section = btn.getAttribute("data-section");
+        const ctx = codeContext();
+        let code = "";
+        if (section === "layout") code = generateLayoutCode(codePlatform, currentData, ctx);
+        else if (section === "style") code = generateStyleCode(codePlatform, currentData, ctx);
+        else if (section === "typography") code = generateTypographyCode(codePlatform, currentData, ctx);
+        else if (section === "variables") code = variablesToCopyText(currentVariables);
+        else if (section === "colors") code = colorsToCopyText(currentColors);
+        else if (section === "all") code = generateAllCode(codePlatform, currentData, ctx);
+        copyText(code, btn);
+      });
+    });
+    document.querySelectorAll(".copy-prop").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const val = btn.getAttribute("data-copy");
+        if (val) copyText(val, btn);
+      });
+    });
+    document.querySelectorAll(".swatch").forEach((sw) => {
+      sw.addEventListener("click", () => {
+        const val = sw.getAttribute("data-copy");
+        if (val) copyText(val);
+      });
+    });
+  }
+  function defaultFormatForAsset(asset) {
+    if (asset.kind === "image") return "PNG";
+    if (asset.kind === "icon") return "SVG";
+    return "PNG";
+  }
+  function kindLabel(kind) {
+    if (kind === "icon") return "Icon";
+    if (kind === "image") return "Image";
+    return "Layer";
+  }
+  function renderAssetCard(asset) {
+    const defFmt = defaultFormatForAsset(asset);
+    const indent = Math.min(asset.depth * 8, 32);
+    return `
+    <div class="asset-card" data-id="${asset.id}" style="margin-left:${indent}px">
+      <div class="asset-name">
+        ${escapeHtml3(asset.name)}
+        <span class="asset-kind ${asset.kind}">${kindLabel(asset.kind)}</span>
+      </div>
+      <div class="asset-meta">
+        <span class="asset-size">${asset.width} \xD7 ${asset.height}</span>
+        <span class="asset-type-label">${escapeHtml3(asset.nodeType)}</span>
+        ${asset.hasExportSettings ? '<span class="asset-type-label">\xB7 export preset</span>' : ""}
+      </div>
+      <div class="export-quick-btns">
+        <button class="export-btn" data-id="${asset.id}" data-format="SVG">SVG</button>
+        <button class="export-btn" data-id="${asset.id}" data-format="PNG" data-scale="1">PNG 1\xD7</button>
+        <button class="export-btn" data-id="${asset.id}" data-format="PNG" data-scale="2">PNG 2\xD7</button>
+        <button class="export-btn" data-id="${asset.id}" data-format="PNG" data-scale="3">PNG 3\xD7</button>
+        <button class="export-btn" data-id="${asset.id}" data-format="PDF">PDF</button>
+      </div>
+      <div class="asset-controls">
+        <select class="form-select asset-format" data-id="${asset.id}">
+          <option value="SVG" ${defFmt === "SVG" ? "selected" : ""}>SVG</option>
+          <option value="PNG" ${defFmt === "PNG" ? "selected" : ""}>PNG</option>
+          <option value="PDF" ${defFmt === "PDF" ? "selected" : ""}>PDF</option>
+        </select>
+        <select class="form-select asset-scale" data-id="${asset.id}">
+          <option value="1">1\xD7</option>
+          <option value="2">2\xD7</option>
+          <option value="3">3\xD7</option>
+          <option value="4">4\xD7</option>
+        </select>
+        <button class="asset-export-btn" data-id="${asset.id}">Export</button>
+      </div>
+    </div>`;
+  }
+  function collectExportItems() {
+    const items = [];
+    exportContent.querySelectorAll(".asset-card").forEach((card) => {
+      var _a2, _b, _c, _d;
+      const id = card.getAttribute("data-id");
+      if (!id) return;
+      const format = (_b = (_a2 = card.querySelector(".asset-format")) == null ? void 0 : _a2.value) != null ? _b : "PNG";
+      const scale = parseFloat((_d = (_c = card.querySelector(".asset-scale")) == null ? void 0 : _c.value) != null ? _d : "1");
+      items.push({ nodeId: id, format, scale });
+    });
+    return items;
+  }
+  function sendExport(nodeId, format, scale) {
+    parent.postMessage({ pluginMessage: { type: "EXPORT_REQUEST", nodeId, format, scale } }, "*");
+  }
+  function sendExportBatch(items) {
+    parent.postMessage({ pluginMessage: { type: "EXPORT_BATCH_REQUEST", items } }, "*");
+  }
+  function bindExportEvents() {
+    var _a2;
+    exportContent.querySelectorAll(".export-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        var _a3;
+        const el = btn;
+        sendExport(
+          el.getAttribute("data-id"),
+          el.getAttribute("data-format"),
+          parseFloat((_a3 = el.getAttribute("data-scale")) != null ? _a3 : "1")
+        );
+      });
+    });
+    exportContent.querySelectorAll(".asset-export-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        const card = btn.closest(".asset-card");
+        const format = card.querySelector(".asset-format").value;
+        const scale = parseFloat(card.querySelector(".asset-scale").value);
+        sendExport(id, format, scale);
+      });
+    });
+    (_a2 = document.getElementById("export-all-btn")) == null ? void 0 : _a2.addEventListener("click", () => {
+      const items = collectExportItems();
+      if (items.length) sendExportBatch(items);
+    });
+  }
+  function renderExport() {
+    var _a2, _b;
+    if (!currentData) {
+      exportContent.innerHTML = '<div class="empty-state">Select a layer to export</div>';
+      return;
+    }
+    const assets = exportTab === "filtered" ? (_a2 = currentData.filteredAssets) != null ? _a2 : [] : (_b = currentData.allAssets) != null ? _b : [];
+    if (!assets.length) {
+      const msg = exportTab === "filtered" ? "No icons or images detected in this selection" : "No exportable layers found";
+      exportContent.innerHTML = `<div class="empty-state">${msg}</div>`;
+      return;
+    }
+    let html = `
+    <div class="export-toolbar">
+      <span class="export-toolbar-left">${assets.length} item${assets.length === 1 ? "" : "s"}</span>
+      <button class="export-all-btn" id="export-all-btn">Export all (${assets.length})</button>
+    </div>`;
+    for (const asset of assets) {
+      html += renderAssetCard(asset);
+    }
+    exportContent.innerHTML = html;
+    bindExportEvents();
+  }
+  function escapeHtml3(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  window.onmessage = (event) => {
+    const msg = event.data.pluginMessage;
+    if (!msg) return;
+    switch (msg.type) {
+      case "NO_SELECTION":
+        currentData = null;
+        currentVariables = [];
+        currentColors = [];
+        emptyState.textContent = "Select a layer to inspect";
+        emptyState.classList.remove("hidden");
+        inspectDataEl.classList.add("hidden");
+        renderExport();
+        break;
+      case "MULTI_SELECTION":
+        currentData = null;
+        emptyState.textContent = "Select a single layer";
+        emptyState.classList.remove("hidden");
+        inspectDataEl.classList.add("hidden");
+        renderExport();
+        break;
+      case "INSPECT_DATA":
+        currentData = msg.data;
+        currentVariables = msg.variables;
+        currentColors = msg.colors;
+        render();
+        renderExport();
+        break;
+      case "EXPORT_RESULT": {
+        const blob = new Blob([new Uint8Array(msg.bytes)], { type: msg.mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = msg.filename;
+        a.click();
+        URL.revokeObjectURL(url);
+        break;
+      }
+    }
+  };
+  var ro = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      parent.postMessage(
+        { pluginMessage: { type: "RESIZE", width: entry.contentRect.width, height: entry.contentRect.height + 90 } },
+        "*"
+      );
+    }
+  });
+  ro.observe(document.body);
+  window.addEventListener("beforeunload", () => {
+    parent.postMessage({ pluginMessage: { type: "PLUGIN_CLOSED" } }, "*");
+  });
+})();
+</script>
+</body>
+</html>
