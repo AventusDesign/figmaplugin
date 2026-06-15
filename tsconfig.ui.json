@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["ES2017", "DOM"],
+    "strict": true,
+    "outDir": "dist",
+    "skipLibCheck": true
+  },
+  "include": ["src/ui.ts", "src/types.ts", "src/utils/css-gen.ts", "src/utils/color-utils.ts", "src/utils/platform-gen.ts"]
+}

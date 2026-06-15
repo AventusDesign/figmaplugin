@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>/*__CSS__*/</style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-actions">
+      <button id="spacing-toggle" class="toggle-pill">Show Spacing</button>
+    </div>
+    <div class="header-selects">
+      <select id="code-platform" class="format-select" title="Code platform">
+        <option value="css">CSS</option>
+        <option value="ios">iOS</option>
+        <option value="android">Android</option>
+        <option value="flutter">Flutter</option>
+      </select>
+      <select id="color-format" class="format-select" title="Color format">
+        <option value="HEX">HEX</option>
+        <option value="RGB">RGB</option>
+        <option value="HSL">HSL</option>
+        <option value="CSS var">CSS var</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="inspect">Inspect</button>
+    <button class="tab" data-tab="export">Export</button>
+  </div>
+
+  <div id="inspect-panel">
+    <div class="sub-tabs">
+      <button class="sub-tab active" data-view="list">List</button>
+      <button class="sub-tab" data-view="code">Code</button>
+    </div>
+    <div class="content" id="inspect-content">
+      <div class="empty-state" id="empty-state">Select a layer to inspect</div>
+      <div id="inspect-data" class="hidden"></div>
+    </div>
+  </div>
+
+  <div id="export-panel" class="hidden">
+    <div class="sub-tabs" id="export-sub-tabs">
+      <button class="sub-tab active" data-export-tab="filtered">Icons & Images</button>
+      <button class="sub-tab" data-export-tab="all">All layers</button>
+    </div>
+    <div class="content export-section" id="export-content">
+      <div class="empty-state">Select a layer to export</div>
+    </div>
+  </div>
+
+  <script>/*__JS__*/</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["ES2017"],
+    "strict": true,
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"]
+  },
+  "include": [
+    "src/code.ts",
+    "src/types.ts",
+    "src/utils/assets.ts",
+    "src/utils/colors.ts",
+    "src/utils/export.ts",
+    "src/utils/spacing.ts",
+    "src/utils/variables.ts"
+  ]
+}
